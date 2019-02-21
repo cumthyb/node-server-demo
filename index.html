@@ -40,6 +40,15 @@
     <input type="submit" value="提交" id='submit-json1'>
   </section>
 
+
+  <section class="setcion form-data">
+    <form action="http://localhost:8080/uploadfile" method='post' enctype="multipart/form-data" accept-charset="utf-8">
+      <input type="file" id="file" name="data" />
+      <input type="submit" value="上传" id="btn-up"/>
+  </form>
+
+  </section>
+
   <script>
 
     const submitJson = document.querySelector('#submit-json')
@@ -47,13 +56,8 @@
       const name = document.querySelector('#name').value;
       const pwd = document.querySelector('#pwd').value;
 
-      // const formData = new FormData();
-      // formData.append('name', name);
-      // formData.append('pwd', pwd);
-
       const xhr = new XMLHttpRequest();
       xhr.open('post', 'http://localhost:8080')
-      // xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
       xhr.setRequestHeader('content-type', 'application/json')
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
@@ -63,9 +67,6 @@
         }
       }
       xhr.send(JSON.stringify({ name, pwd }))
-      // xhr.send(formData)
-
-
     })
 
   </script>
@@ -83,7 +84,6 @@
       const xhr = new XMLHttpRequest();
       xhr.open('post', 'http://localhost:8080')
       // xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
-      // xhr.setRequestHeader('content-type', 'application/json')
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
           if (xhr.status == 200) {

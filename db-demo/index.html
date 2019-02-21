@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .setcion {
+      padding: 20px;
+      border: 1px solid black;
+      margin-bottom: 50px;
+    }
+  </style>
+</head>
+
+<body>
+
+
+
+  <section class="setcion form-data">
+    <span>formdata</span> <br>
+    <span>用户</span> <input type="text" id='name1'><br>
+    <span>密码</span> <input type="password" id='pwd1'><br>
+    <input type="submit" value="注册" id='register'>
+    <input type="submit" value="登陆" id='login'>
+  </section>
+
+  <script>
+
+    const btnReg = document.querySelector('#register')
+    const btnLogin = document.querySelector('#login')
+    btnReg.addEventListener('click', () => {
+      const name = document.querySelector('#name1').value;
+      const pwd = document.querySelector('#pwd1').value;
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('post', 'http://localhost:8080')
+      xhr.setRequestHeader('content-type','application/json')
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if (xhr.status == 200) {
+            alert(xhr.responseText);
+          }
+        }
+      }
+      xhr.send({name,pwd})
+    })
+
+  </script>
+</body>
+
+</html>

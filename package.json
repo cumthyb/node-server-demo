@@ -10,5 +10,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {}
+  "dependencies": {
+    "formidable": "^1.2.1",
+    "mysql": "^2.16.0"
+  }
 }

@@ -7,8 +7,7 @@ function serverCallback(req, res) {
     res.setHeader('Set-Cookie', ['type=ninja;Max-Age=10;httponly', 'language=javascript']);
     res.writeHead(200, {
         'Content-type': 'text/html',
-        // 'Set-Cookie': 'a=100'
-        'Set-Cookie': ['a=100', 'b=200']
+        // 'Set-Cookie': ['a=100', 'b=200']
     })
     res.write('hello nodejs')
     res.end()

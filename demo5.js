@@ -1,18 +1,21 @@
-const http=require('http')
-const querystring=require('querystring')
+const http = require('http')
+const querystring = require('querystring')
 
+//////////http.get///////////////////////////////////////////////////////////////////
 
-http.get('http://nodejs.org/dist/index.json', (res) => {
+let url='http://api.seniverse.com/v3/weather/now.json?key=5msxqxpy0gqkppfr&location=beijing&language=zh-Hans&unit=c'
+
+http.get(url, (res) => {
   const { statusCode } = res;
   const contentType = res.headers['content-type'];
 
   let error;
   if (statusCode !== 200) {
     error = new Error('Request Failed.\n' +
-                      `Status Code: ${statusCode}`);
+      `Status Code: ${statusCode}`);
   } else if (!/^application\/json/.test(contentType)) {
     error = new Error('Invalid content-type.\n' +
-                      `Expected application/json but received ${contentType}`);
+      `Expected application/json but received ${contentType}`);
   }
   if (error) {
     console.error(error.message);
@@ -27,7 +30,8 @@ http.get('http://nodejs.org/dist/index.json', (res) => {
   res.on('end', () => {
     try {
       const parsedData = JSON.parse(rawData);
-      console.log(parsedData.lenght);
+      console.log(parsedData);
+      console.log(rawData);
     } catch (e) {
       console.error(e.message);
     }
@@ -36,16 +40,15 @@ http.get('http://nodejs.org/dist/index.json', (res) => {
   console.error(`Got error: ${e.message}`);
 });
 
-
-
+//////http.request////////////////////////////////////////////////////////////
 
 const postData = querystring.stringify({
   'msg': 'Hello World!'
 });
 
 const options = {
-  hostname: 'www.google.com',
-  port: 80,
+  hostname: '10.19.8.142',
+  port: 8888,
   path: '/upload',
   method: 'POST',
   headers: {
@@ -56,9 +59,8 @@ const options = {
 
 const req = http.request(options, (res) => {
   console.log(`STATUS: ${res.statusCode}`);
-  console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
   res.setEncoding('utf8');
-  res.on('data', (chunk) => {
+  res.on('data', chunk => {
     console.log(`BODY: ${chunk}`);
   });
   res.on('end', () => {
@@ -70,6 +72,7 @@ req.on('error', (e) => {
   console.error(`problem with request: ${e.message}`);
 });
 
-// write data to request body
+req.setHeader('content-type', 'application/json')
+
 req.write(postData);
 req.end();
