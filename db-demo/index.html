@@ -20,24 +20,32 @@
 
 
   <section class="setcion form-data">
-    <span>formdata</span> <br>
+    <span>用户注册登陆，查看登陆日志</span> <br>
     <span>用户</span> <input type="text" id='name1'><br>
     <span>密码</span> <input type="password" id='pwd1'><br>
+    <br>
     <input type="submit" value="注册" id='register'>
     <input type="submit" value="登陆" id='login'>
+    <input type="submit" value="日志" id='logs'>
+  </section>
+
+  <section>
+    <ul id='log-panel'>
+    </ul>
   </section>
 
   <script>
 
     const btnReg = document.querySelector('#register')
     const btnLogin = document.querySelector('#login')
+    const btnLogs = document.querySelector('#logs')
     btnReg.addEventListener('click', () => {
       const name = document.querySelector('#name1').value;
       const pwd = document.querySelector('#pwd1').value;
 
       const xhr = new XMLHttpRequest();
-      xhr.open('post', 'http://localhost:8080')
-      xhr.setRequestHeader('content-type','application/json')
+      xhr.open('post', 'http://localhost:3456/register')
+      xhr.setRequestHeader('content-type', 'application/json')
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
           if (xhr.status == 200) {
@@ -45,8 +53,51 @@
           }
         }
       }
-      xhr.send({name,pwd})
+      xhr.send(JSON.stringify({ name, pwd }))
     })
+
+
+    btnLogin.addEventListener('click', () => {
+      const name = document.querySelector('#name1').value;
+      const pwd = document.querySelector('#pwd1').value;
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('post', 'http://localhost:3456/login')
+      xhr.setRequestHeader('content-type', 'application/json')
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if (xhr.status == 200) {
+            alert(xhr.responseText);
+          }
+        }
+      }
+      xhr.send(JSON.stringify({ name, pwd }))
+    })
+
+    btnLogs.addEventListener('click', () => {
+      const name = document.querySelector('#name1').value;
+      const xhr = new XMLHttpRequest();
+      xhr.open('get', `http://localhost:3456/logs?name=${name}`)
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if (xhr.status == 200) {
+            let res = JSON.parse(xhr.response)
+            renderLogs(res.data);
+          }
+        }
+      }
+      xhr.send()
+    })
+
+    function renderLogs(logs) {
+      if (!logs.length) return;
+      const sLogs = document.getElementById('log-panel')
+      let list = '<span>用户登陆日志</span>'
+      logs.map(log => {
+        list += `<li>${log.id}   ${log.logintime}</li><br>`
+      })
+      sLogs.innerHTML = list
+    }
 
   </script>
 </body>

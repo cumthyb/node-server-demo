@@ -7,8 +7,14 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "db",
+      "program": "${workspaceFolder}/db-demo/index.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Node",
-      "program": "${workspaceFolder}/demo4.js"
+      "program": "${workspaceFolder}/demo1.js"
     }
   ]
 }
