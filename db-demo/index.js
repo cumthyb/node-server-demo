@@ -4,7 +4,7 @@
  * @Description: 原生node演示mysql数据库CURD
  * @Notice: 
  * @Date: 2019-02-21 18:46:10
- * @LastEditTime: 2019-02-22 18:56:25
+ * @LastEditTime: 2019-02-24 22:45:00
  */
 
 
@@ -59,7 +59,7 @@ app.on('close', msg => {
  * @parmas: 
  * @Description:注册路由
  */
-registerRouter('post', '/register', async (query, res) => {
+registerRouter('post', '/register',  (query, res) => {
   try {
     pool.getConnection((err, conn) => {
       if (err) {
@@ -101,7 +101,7 @@ registerRouter('post', '/register', async (query, res) => {
  * @parmas: 
  * @Description:注册路由
  */
-registerRouter('post', '/login', async (query, res) => {
+registerRouter('post', '/login',  (query, res) => {
   try {
     pool.getConnection((err, conn) => {
       if (err) {
@@ -144,7 +144,7 @@ registerRouter('post', '/login', async (query, res) => {
  * @parmas: 
  * @Description:注册路由
  */
-registerRouter('get', '/logs', async (query, res) => {
+registerRouter('get', '/logs',  (query, res) => {
   try {
     pool.getConnection((err, conn) => {
       if (err) {
@@ -257,5 +257,3 @@ function requestCallbak(req, res) {
     res.end()
   }
 }
-
-

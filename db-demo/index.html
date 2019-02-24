@@ -90,13 +90,17 @@
     })
 
     function renderLogs(logs) {
-      if (!logs.length) return;
       const sLogs = document.getElementById('log-panel')
-      let list = '<span>用户登陆日志</span>'
-      logs.map(log => {
-        list += `<li>${log.id}   ${log.logintime}</li><br>`
-      })
-      sLogs.innerHTML = list
+      if (!logs.length) {
+        sLogs.innerHTML = '<span>用户无登陆日志</span>'
+      }
+      else {
+        let list = '<span>用户登陆日志</span>'
+        logs.map(log => {
+          list += `<li>${log.id}   ${log.logintime}</li><br>`
+        })
+        sLogs.innerHTML = list
+      }
     }
 
   </script>
