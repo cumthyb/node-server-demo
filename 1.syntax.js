@@ -5,12 +5,14 @@ var querystring = require('querystring')
 
 // // 处理 get 请求
 // function serverCallback(req, res) {
-//   console.log(req.headers)
+//   // console.log(req.headers)
 //   res.writeHead(200, {'Content-type': 'text/plain'})
+//   res.write(`hello nodejs demo1-get \n`)
 //   res.write('hello nodejs demo1-get')
 //   res.end()
 // }
 // http.createServer(serverCallback).listen(8080)
+
 
 
 
@@ -100,6 +102,7 @@ function serverCallback(req, res) {
       else if (contentType === 'application/json') {        
           const arr=[]
           req.on('data', function (chunk) {
+            
             arr.push(chunk)
           })
           req.on('end', function () {
