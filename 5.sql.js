@@ -1,46 +1,93 @@
 const http = require('http')
-const util = require('util')
-const URL = require('url')
-const querystring=require('querystring')
+const url = require('url')
+const mysql = require('mysql')
+const util = require('util');
 
 http.createServer(function (req, res) {
-  console.log('url',req.url)
-  if (req.url==='/favicon.ico') {
-    res.end();
-    return
-  }
-  if (req.method.toUpperCase() === 'POST') {
-    // 定义了一个post变量，用于暂存请求体的信息
-    var post = '';
-    let arr=[]
-    // 通过req的data事件监听函数，每当接受到请求体的数据，就累加到post变量中
-    req.on('data', function (chunk) {
-      arr.push(chunk)
-    });
 
-    // 在end事件触发后，通过querystring.parse将post解析为真正的POST请求格式，然后向客户端返回。
-    req.on('end', function () {
-      let buffer=Buffer.concat(arr)
-      let query=querystring.parse(buffer.toString())
+  let { pathname, query } = url.parse(req.url, true)
 
-      res.end(buffer.toString())
-    });
-  } else if (req.method.toUpperCase() === 'GET') {
-    res.writeHead(200, {
-      'Content-Type': 'text/plain',
-      'Trailer': 'Content-MD5'
-    });
-    let url = URL.parse(req.url,true)
-    console.log(url.query)
-    res.write(url.query);
-    res.addTrailers({ 'Content-MD5': '7895bf4b8828b55ceaf47747b4bca667' });
-    res.end();
+  switch (pathname) {
+    case '/insert':
+      sInsert(query, res)
+      break;
+    case '/delete':
+      sDelete(query, res)
+      break;
+    case '/update':
+      sUpdate(query, res)
+      break;
+    case '/select':
+      sSelect(query, res)
+      break;
+    default:
+      res.statusCode = 404
+      res.end()
+      break;
   }
 
 }).listen({
   host: 'localhost',
-  port: 8888,
-  exclusive: true
+  port: 8080
 }, () => {
-  console.log('node server started at localhost:8888')
+  console.log('node server started at localhost:8080')
 });
+
+const dbOptions = {
+  host: 'cumthyb.site',
+  port: 3306,
+  user: 'root',
+  password: 'Hyb2018.',
+  database: 'test',
+  connectTimeout: 5000
+}
+const conn = mysql.createConnection(dbOptions)
+
+conn.connect();
+
+
+function sInsert(query, res) {
+  conn.query('insert into user values(?,?,?)', [(new Date()).getTime, query.name, query.pwd], (err, result, fields) => {
+    if (err) {
+      res.end(err.message)
+    }
+    else {
+      res.end('insert 成功')
+    }
+  })
+}
+
+function sDelete(query, res) {
+  conn.query('delete from user where name=?', [query.name], (err, result, fields) => {
+    if (err) {
+      res.end(err.message)
+    }
+    else {
+      res.end('delete 成功')
+    }
+  })
+}
+
+function sUpdate(query, res) {
+  conn.query('update user set name=?,pwd=? where id=?', [query.name,query.pwd,query.id], (err, result, fields) => {
+    if (err) {
+      res.end(err.message)
+    }
+    else {
+      res.end('update 成功')
+    }
+  })
+}
+
+function sSelect(query, res) {
+  conn.query('select * from  user where name=?', [query.name], (err, result, fields) => {
+    if (err) {
+      res.end(err.message)
+    }
+    else {
+      res.end(util.inspect(result));
+    }
+  })
+}
+
+

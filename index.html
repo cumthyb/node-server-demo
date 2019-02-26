@@ -18,35 +18,22 @@
 <body>
 
   <!-- demo简略 -->
-  <section class="setcion form">
-    <span>form表单</span> <br>
-    <form action="http://localhost:8080/api" method="post">
-      <span>用户</span> <input type="text" name='name'><br>
-      <span>密码</span> <input type="password" name='pwd'><br>
-      <input type="submit" value="提交">
-    </form>
-  </section>
+
 
   <section class="setcion json">
-    <span>json</span> <br>
+    <span>用于演示：post json</span> <br>
     <span>用户</span> <input type="text" id='name'><br>
     <span>密码</span> <input type="password" id='pwd'><br>
     <input type="submit" value="提交" id='submit-json'>
   </section>
 
-  <section class="setcion form-data">
-    <span>formdata</span> <br>
-    <span>用户</span> <input type="text" id='name1'><br>
-    <span>密码</span> <input type="password" id='pwd1'><br>
-    <input type="submit" value="提交" id='submit-json1'>
-  </section>
-
 
   <section class="setcion form-data">
+    <span>用于演示：文件上传</span>
     <form action="http://localhost:8080/uploadfile" method='post' enctype="multipart/form-data" accept-charset="utf-8">
       <input type="file" id="file" name="data" />
-      <input type="submit" value="上传" id="btn-up"/>
-  </form>
+      <input type="submit" value="上传" id="btn-up" />
+    </form>
 
   </section>
 
@@ -68,33 +55,6 @@
         }
       }
       xhr.send(JSON.stringify({ name, pwd }))
-    })
-
-  </script>
-  <script>
-
-    const submitJson2 = document.querySelector('#submit-json1')
-    submitJson2.addEventListener('click', () => {
-      const name = document.querySelector('#name1').value;
-      const pwd = document.querySelector('#pwd1').value;
-
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('pwd', pwd);
-
-      const xhr = new XMLHttpRequest();
-      xhr.open('post', 'http://localhost:8080')
-      // xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          if (xhr.status == 200) {
-            alert(xhr.responseText);
-          }
-        }
-      }
-      xhr.send(formData)
-
-
     })
 
   </script>

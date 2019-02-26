@@ -19,8 +19,38 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Node",
-      "program": "${workspaceFolder}/demo1.js"
+      "name": "1.1.simple",
+      "program": "${workspaceFolder}/1.1.simple.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "1.2.server-event",
+      "program": "${workspaceFolder}/1.2.server-event.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "2.1.request",
+      "program": "${workspaceFolder}/2.1.request.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "2.2.reponse",
+      "program": "${workspaceFolder}/2.2.reponse.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "3.file",
+      "program": "${workspaceFolder}/3.file.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "5.sql",
+      "program": "${workspaceFolder}/5.sql.js"
     }
   ]
 }

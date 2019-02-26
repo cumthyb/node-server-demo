@@ -2,13 +2,11 @@ const http = require('http')
 const URL = require('url')
 const fs = require('fs')
 const util = require('util');
-const path=require('path')
-const querystring = require('querystring')
 
 function serverCallback(req, res) {
   const url = URL.parse(req.url)
   let filePath = './static/公章.png'
-  if (url.pathname === '/file') {
+  if (url.pathname === '/download/img') {
     fs.stat(filePath, (err, stats) => {
       let readStream = fs.createReadStream(filePath)
       let arr = []
