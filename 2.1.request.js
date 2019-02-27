@@ -37,7 +37,7 @@ function serverCallback(req, res) {
   else if (method === 'options') {
     //https://www.w3.org/TR/cors/#resource-preflight-requests
     res.setHeader('Access-Control-Allow-Origin', '*')//必选
-    res.setHeader('Access-Control-Allow-Methods', 'put,post')//必选
+    res.setHeader('Access-Control-Allow-Methods', 'put')//必选
     res.setHeader('Access-Control-Allow-Headers', 'content-type')//告诉浏览器我(服务器)要求你必带的请求头
     res.setHeader('Access-Control-Max-Age', '10')//告诉浏览器max-age(单位：秒)时间内，你不必再发预检请求了，朕准了！
     res.writeHead(200)
